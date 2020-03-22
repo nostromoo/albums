@@ -13,8 +13,6 @@ class AlbumAdapter :
         AlbumDiffCallback()
     ) {
 
-    var albums : List<Album?> = arrayListOf()
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(AlbumItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }

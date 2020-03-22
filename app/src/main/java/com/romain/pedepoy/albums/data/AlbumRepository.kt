@@ -2,7 +2,8 @@ package com.romain.pedepoy.albums.data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.romain.pedepoy.albums.service.AlbumService
+import com.romain.pedepoy.albums.service.AlbumApi
+import com.romain.pedepoy.albums.utilities.BASE_URL
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -11,15 +12,16 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Inject
 
-class AlbumRepository private constructor(private val albumDao: AlbumDao) {
+class AlbumRepository  constructor(private val albumDao: AlbumDao) {
 
     private val retrofit = Retrofit.Builder()
-        .baseUrl("https://static.leboncoin.fr")
+        .baseUrl(BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    private val webservice : AlbumService = retrofit.create<AlbumService>(AlbumService::class.java) //todo utiliser Dagger pour injecter le WS
+    private val webservice : AlbumApi = retrofit.create<AlbumApi>(AlbumApi::class.java) //todo utiliser Dagger pour injecter le WS
 
     fun getAlbums(): LiveData<List<Album>> {
 

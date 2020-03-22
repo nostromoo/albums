@@ -19,4 +19,5 @@ package com.romain.pedepoy.albums.utilities
 /**
  * Constants used throughout the app.
  */
+const val BASE_URL = "https://static.leboncoin.fr"
 const val DATABASE_NAME = "albums"
