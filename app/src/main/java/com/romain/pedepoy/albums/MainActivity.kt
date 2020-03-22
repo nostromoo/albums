@@ -2,12 +2,14 @@ package com.romain.pedepoy.albums
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil.setContentView
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.romain.pedepoy.albums.adapter.AlbumAdapter
 import com.romain.pedepoy.albums.data.AlbumRepository
 import com.romain.pedepoy.albums.data.AppDatabase
+import com.romain.pedepoy.albums.databinding.ActivityMainBinding
 import com.romain.pedepoy.albums.viewmodels.AlbumListViewModel
-import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -16,21 +18,24 @@ class MainActivity : AppCompatActivity() {
         AlbumListViewModel(AlbumRepository.getInstance(AppDatabase.getInstance(this).albumDao()))
     }
 
+    private lateinit var binding : ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
+        binding = setContentView(this, R.layout.activity_main)
 
         val adapter = AlbumAdapter()
-        albumList.adapter = adapter
-        albumList.setHasFixedSize(true)
-        albumList.layoutManager = LinearLayoutManager(this)
+        binding.albumList.adapter = adapter
+        binding.albumList.setHasFixedSize(true)
+        binding.albumList.layoutManager = LinearLayoutManager(this)
 
         subscribeToModel()
     }
 
     private fun subscribeToModel() {
         viewModel.albums.observe(this){ albums ->
-            (albumList.adapter as AlbumAdapter).submitList(albums)
+            (binding.albumList.adapter as AlbumAdapter).submitList(albums)
         }
     }
 }
