@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.romain.pedepoy.albums.utilities.DATABASE_NAME
 
-@Database(entities = [Album::class], version = 1)
+@Database(entities = [Album::class], version = 2, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun albumDao(): AlbumDao
 
@@ -24,6 +24,7 @@ abstract class AppDatabase : RoomDatabase() {
 
         private fun buildDatabase(context: Context): AppDatabase {
             return Room.databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME)
+                .fallbackToDestructiveMigration()
                 .build()
         }
     }

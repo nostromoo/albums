@@ -31,7 +31,7 @@ class AlbumAdapter :
 private class AlbumDiffCallback : DiffUtil.ItemCallback<Album>() {
 
     override fun areItemsTheSame(oldItem: Album, newItem: Album): Boolean {
-        return oldItem.Id == newItem.Id
+        return oldItem.id == newItem.id
     }
 
     override fun areContentsTheSame(oldItem: Album, newItem: Album): Boolean {

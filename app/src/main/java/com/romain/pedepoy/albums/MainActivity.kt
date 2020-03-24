@@ -1,6 +1,7 @@
 package com.romain.pedepoy.albums
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil.setContentView
 import androidx.lifecycle.observe
@@ -10,6 +11,7 @@ import com.romain.pedepoy.albums.data.AlbumRepository
 import com.romain.pedepoy.albums.data.AppDatabase
 import com.romain.pedepoy.albums.databinding.ActivityMainBinding
 import com.romain.pedepoy.albums.viewmodels.AlbumListViewModel
+import com.romain.pedepoy.albums.data.Result
 
 
 class MainActivity : AppCompatActivity() {
@@ -34,8 +36,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun subscribeToModel() {
-        viewModel.albums.observe(this){ albums ->
-            (binding.albumList.adapter as AlbumAdapter).submitList(albums)
+        viewModel.albums.observe(this) { result ->
+            when (result.status) {
+                Result.Status.SUCCESS -> {
+                    binding.progressBar.visibility = View.GONE
+                    result.data?.let {  (binding.albumList.adapter as AlbumAdapter).submitList(it) }
+                }
+                Result.Status.LOADING -> binding.progressBar.visibility = View.VISIBLE
+                Result.Status.ERROR -> {
+                    binding.progressBar.visibility = View.GONE
+                }
+            }
         }
     }
 }
