@@ -7,22 +7,21 @@ import androidx.databinding.DataBindingUtil.setContentView
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.romain.pedepoy.albums.adapter.AlbumAdapter
-import com.romain.pedepoy.albums.data.AlbumRepository
-import com.romain.pedepoy.albums.data.AppDatabase
 import com.romain.pedepoy.albums.databinding.ActivityMainBinding
 import com.romain.pedepoy.albums.viewmodels.AlbumListViewModel
 import com.romain.pedepoy.albums.data.Result
+import dagger.android.AndroidInjection
+import javax.inject.Inject
 
 
 class MainActivity : AppCompatActivity() {
 
-    private val viewModel : AlbumListViewModel by lazy {
-        AlbumListViewModel(AlbumRepository.getInstance(AppDatabase.getInstance(this).albumDao()))
-    }
-
+    @Inject
+    lateinit var viewModel : AlbumListViewModel
     private lateinit var binding : ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
 
         binding = setContentView(this, R.layout.activity_main)
