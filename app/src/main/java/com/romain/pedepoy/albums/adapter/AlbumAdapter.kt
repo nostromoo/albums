@@ -2,14 +2,14 @@ package com.romain.pedepoy.albums.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.romain.pedepoy.albums.data.Album
 import com.romain.pedepoy.albums.databinding.AlbumItemBinding
 
 class AlbumAdapter :
-    ListAdapter<Album, AlbumAdapter.ViewHolder>(
+    PagedListAdapter<Album, AlbumAdapter.ViewHolder>(
         AlbumDiffCallback()
     ) {
 
@@ -18,7 +18,10 @@ class AlbumAdapter :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        val album = getItem(position)
+        album?.let {
+            holder.bind(album)
+        }
     }
 
     class ViewHolder(private val binding: AlbumItemBinding) : RecyclerView.ViewHolder(binding.root){

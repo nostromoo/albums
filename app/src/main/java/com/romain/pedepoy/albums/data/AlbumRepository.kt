@@ -1,5 +1,7 @@
 package com.romain.pedepoy.albums.data
 
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import com.romain.pedepoy.albums.service.AlbumApi
 import com.romain.pedepoy.albums.utilities.BASE_URL
 import retrofit2.Retrofit
@@ -9,15 +11,24 @@ class AlbumRepository  constructor(private val albumDao: AlbumDao, private val r
 
     val albums = resultLiveData(
         databaseQuery = {
-            albumDao.getAll()
+            val config = PagedList.Config.Builder()
+                .setEnablePlaceholders(false)
+                .setInitialLoadSizeHint(INITIAL_LOAD)
+                .setPageSize(PAGE_SIZE)
+                .setPrefetchDistance(PRE_FETCH_DISTANCE)
+                .build()
+            LivePagedListBuilder<Int, Album>(albumDao.getPagedList(), config).build()
         },
         networkCall = { remoteSource.fetchData() },
-        saveCallResult = {
-            albumDao.insertAll(it)
-        })
+        saveCallResult = { albumDao.insertAll(it) }
+    )
 
 
     companion object {
+
+        const val INITIAL_LOAD = 100
+        const val PAGE_SIZE = 50
+        const val PRE_FETCH_DISTANCE = 10
 
         @Volatile private var instance: AlbumRepository? = null
 

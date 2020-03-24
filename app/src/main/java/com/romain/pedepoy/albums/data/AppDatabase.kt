@@ -10,8 +10,6 @@ import com.romain.pedepoy.albums.utilities.DATABASE_NAME
 abstract class AppDatabase : RoomDatabase() {
     abstract fun albumDao(): AlbumDao
 
-    // For Singleton instantiation
-
     companion object {
 
         @Volatile private var instance: AppDatabase? = null

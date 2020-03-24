@@ -40,12 +40,10 @@ class MainActivity : AppCompatActivity() {
             when (result.status) {
                 Result.Status.SUCCESS -> {
                     binding.progressBar.visibility = View.GONE
-                    result.data?.let {  (binding.albumList.adapter as AlbumAdapter).submitList(it) }
+                    result.data?.let { (binding.albumList.adapter as AlbumAdapter).submitList(it) }
                 }
                 Result.Status.LOADING -> binding.progressBar.visibility = View.VISIBLE
-                Result.Status.ERROR -> {
-                    binding.progressBar.visibility = View.GONE
-                }
+                Result.Status.ERROR -> { binding.progressBar.visibility = View.GONE }
             }
         }
     }

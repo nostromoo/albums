@@ -3,6 +3,7 @@ package com.romain.pedepoy.albums.data
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import androidx.lifecycle.map
+import androidx.paging.PagedList
 import kotlinx.coroutines.Dispatchers
 
 /**
@@ -13,19 +14,19 @@ import kotlinx.coroutines.Dispatchers
  * [Result.Status.ERROR] - if error has occurred from any source
  * [Result.Status.LOADING]
  */
-fun <T, A> resultLiveData(databaseQuery: () -> LiveData<T>,
+fun <T, A> resultLiveData(databaseQuery: () -> LiveData<PagedList<T>>,
                           networkCall: suspend () -> Result<A>,
-                          saveCallResult: suspend (A) -> Unit): LiveData<Result<T>> =
-        liveData(Dispatchers.IO) {
-            emit(Result.loading<T>())
-            val source = databaseQuery.invoke().map { Result.success(it) }
-            emitSource(source)
+                          saveCallResult: suspend (A) -> Unit): LiveData<Result<PagedList<T>>> =
+    liveData(Dispatchers.IO) {
+        emit(Result.loading())
+        val source = databaseQuery.invoke().map {Result.success(it)}
+        emitSource(source)
 
-            val responseStatus = networkCall.invoke()
-            if (responseStatus.status == Result.Status.SUCCESS) {
-                saveCallResult(responseStatus.data!!)
-            } else if (responseStatus.status == Result.Status.ERROR) {
-                emit(Result.error<T>(responseStatus.message!!))
-                emitSource(source)
-            }
+        val responseStatus = networkCall.invoke()
+        if (responseStatus.status == Result.Status.SUCCESS) {
+            saveCallResult(responseStatus.data!!)
+        } else if (responseStatus.status == Result.Status.ERROR) {
+            emit(Result.error(responseStatus.message!!))
+            emitSource(source)
         }
+    }
