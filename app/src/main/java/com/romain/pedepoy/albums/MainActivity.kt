@@ -5,7 +5,6 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil.setContentView
 import androidx.lifecycle.observe
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.romain.pedepoy.albums.adapter.AlbumAdapter
 import com.romain.pedepoy.albums.databinding.ActivityMainBinding
 import com.romain.pedepoy.albums.viewmodels.AlbumListViewModel
@@ -29,7 +28,6 @@ class MainActivity : AppCompatActivity() {
         val adapter = AlbumAdapter()
         binding.albumList.adapter = adapter
         binding.albumList.setHasFixedSize(true)
-        binding.albumList.layoutManager = LinearLayoutManager(this)
 
         subscribeToModel()
     }
