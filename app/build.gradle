@@ -39,7 +39,6 @@ android {
 }
 
 dependencies {
-    kapt "androidx.room:room-compiler:$roomVersion"
 
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
@@ -53,8 +52,12 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
     implementation "androidx.room:room-runtime:$roomVersion"
     implementation "androidx.room:room-ktx:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
     implementation "androidx.paging:paging-runtime:$pagingVersion" // For Kotlin use paging-runtime-ktx
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
+
+    // Material
+    implementation 'com.google.android.material:material:1.1.0'
 
     // Dagger
     kapt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"

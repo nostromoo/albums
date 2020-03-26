@@ -5,6 +5,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil.setContentView
 import androidx.lifecycle.observe
+import com.google.android.material.snackbar.Snackbar
 import com.romain.pedepoy.albums.adapter.AlbumAdapter
 import com.romain.pedepoy.albums.databinding.ActivityMainBinding
 import com.romain.pedepoy.albums.viewmodels.AlbumListViewModel
@@ -39,8 +40,11 @@ class MainActivity : AppCompatActivity() {
                     binding.progressBar.visibility = View.GONE
                     result.data?.let { (binding.albumList.adapter as AlbumAdapter).submitList(it) }
                 }
-                Result.Status.LOADING -> binding.progressBar.visibility = View.VISIBLE
-                Result.Status.ERROR -> { binding.progressBar.visibility = View.GONE }
+                Result.Status.LOADING -> { binding.progressBar.visibility = View.VISIBLE }
+                Result.Status.ERROR -> {
+                    binding.progressBar.visibility = View.GONE
+                    result.message?.let { Snackbar.make(binding.constraintLayout, it, Snackbar.LENGTH_LONG).show() }
+                }
             }
         }
     }
