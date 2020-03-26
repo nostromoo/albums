@@ -20,7 +20,7 @@ buildscript {
         testExtJunit = '1.1.0'
         testRunnerVersion = "1.1.1"
         testRulesVersion = "1.1.1"
-        retrofitVersion = "2.7.2"
+        retrofitVersion = "2.6.0"
         okhttpVersion = "4.4.0"
         picassoVersion = "2.71828"
         mockitoVersion = "2.25.0"
