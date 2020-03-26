@@ -23,6 +23,9 @@ import com.squareup.picasso.Picasso
 @BindingAdapter("imageFromUrl")
 fun bindImageFromUrl(view: ImageView, imageUrl: String?) {
     if (!imageUrl.isNullOrEmpty()) {
-        Picasso.get().load(imageUrl).into(view)
+        Picasso
+            .get()
+            .load(imageUrl)
+            .into(view)
     }
 }

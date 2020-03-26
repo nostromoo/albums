@@ -26,8 +26,8 @@ class AlbumRepository  @Inject constructor(private val albumDao: AlbumDao,
 
     companion object {
 
-        const val INITIAL_LOAD = 100
-        const val PAGE_SIZE = 50
+        const val INITIAL_LOAD = 60
+        const val PAGE_SIZE = 20
         const val PRE_FETCH_DISTANCE = 10
 
     }

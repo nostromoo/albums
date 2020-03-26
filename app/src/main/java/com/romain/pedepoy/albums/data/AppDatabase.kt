@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.romain.pedepoy.albums.utilities.DATABASE_NAME
 
-@Database(entities = [Album::class], version = 2, exportSchema = false)
+@Database(entities = [Album::class], version = 3, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun albumDao(): AlbumDao
 
